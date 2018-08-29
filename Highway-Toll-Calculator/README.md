@@ -16,6 +16,6 @@ The factors below are taken into account to calculate toll charges for each ride
   fee of **$4.15**.
   * Provincial Tax: **13% of total fee**
 
-Additional Notes:
+# Calculator - Specifications
 * Exactly 12 constant variables must be used for the purpose of this assignment. 
 * The final product must only use the specified 4 functions - display_instructions(), calculate_toll_charge(), determine_zone(), calculate_total_bill()
