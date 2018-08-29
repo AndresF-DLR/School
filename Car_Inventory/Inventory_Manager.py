@@ -1,4 +1,4 @@
-#Main Variables
+#Initialize Menu Variables
 MINI_MENU = """
 Car Inventory Menu
 ==================
@@ -30,7 +30,7 @@ Search Menu
 
     """
 
-#Index Variables Per Car in Inventory
+#Initialize Index Variables Per Car Entry
 MODEL_NUMBER_INDEX = 0
 YEAR_INDEX = 1
 COLOR_INDEX = 2
@@ -39,7 +39,6 @@ MODEL_INDEX = 4
 BODY_INDEX = 5
 QUANTITY_INDEX = 6
 
-#Display Menu
 def menu(inventory_size):
     """(int) -> str 
     This function takes one variable, the size of the inventory, and decides 
@@ -84,7 +83,6 @@ def menu(inventory_size):
     selection = input("Enter your selection: ")
     return selection
 
-#Find Card Index
 def find_index(inventory, model_number, year, colour):
     """(list, str, int, str) -> int
     This function takes four variables, the inventory (a list of lists), the 
@@ -103,14 +101,14 @@ def find_index(inventory, model_number, year, colour):
     -1
     """
     
-    #Go Through Cars in Inventory and Try to Match User Input with Respective Car Variable
+    #Match User Input with Respective Car Variable in Inventory
     for car_index in range(len(inventory)):
             if inventory[car_index][MODEL_NUMBER_INDEX] == model_number and inventory[car_index][YEAR_INDEX] == year and inventory[car_index][COLOR_INDEX] == colour:
                 return car_index
-    #Result When No Car Variables Matched User Inputs
+            
+    #No Car Variables Matched User Inputs
     return -1
 
-#Add Car to Inventory
 def add_car(inventory):
     """(list) -> None
     This function takes one variable, the inventory, which is a list of lists.
@@ -145,13 +143,13 @@ def add_car(inventory):
     [[ZN3EU, 2017, Red, Toyota, Prius V, Hatchback, 2]]
     """
     
-    #Identify if Car Already Exist Based on First Three Car Variables
+    #Check if Car is Already in Inventory
     user_model_number = input("Enter the model number: ")
     user_year = int(input("Enter the year: "))
     user_colour = input("Enter the colour: ")
     car_index = find_index(inventory, user_model_number, user_year, user_colour)
     
-    #If No Matches Result from First Three Variables Add New Car With the Rest of Variables
+    #Add New Car with Remained Variables
     if car_index == -1:
         user_make = input("Enter the make: ")
         user_model = input("Enter the model: ")
@@ -160,14 +158,14 @@ def add_car(inventory):
         inventory.append([user_model_number, user_year, user_colour, user_make, user_model, user_body_type, user_quantity])
         print("\nNew car successfully added")
 
-    #If First Three Variables Match a Existing Car in Inventory, Only Ask for Additional Quantities
+    #If Car Matched, Add Additional Units
     else:
         print("\nCar already exist in inventory.")
         user_quantity = int(input("Enter the quantity to be added: "))
         inventory[car_index][QUANTITY_INDEX] += user_quantity
         print("\nIncreased quantity by " + str(user_quantity) + ". New quantity is: " + str(inventory[car_index][QUANTITY_INDEX]))
 
-#Remove Car from Inventory
+
 def remove_car(inventory):
     """(list) -> None
     This function takes one variable, the inventory, whch is a list of lists.
@@ -209,26 +207,27 @@ def remove_car(inventory):
     [[ZN3EU, 2017, Red, Toyota, Prius V, Hatchback, 2]]
     """
     
-    #Identify if Car Already Exist Based on First Three Car Variables
+
     user_model_number = input("Enter the model number: ")
     user_year = int(input("Enter the year: "))
     user_colour = input("Enter the colour: ")
     car_index = find_index(inventory, user_model_number, user_year, user_colour)
     
-    #Prompt if No Matches from First Three Variables
+    
     if car_index == -1:
         print("\nCar not found! Cannot remove car!")
     
-    #If Matching Car has More than One Unit in Inventory, Remove One Unit from Inventory
+    #If Car Matched, Remove One Unit from Inventory
     elif inventory[car_index][QUANTITY_INDEX] > 1:
         inventory[car_index][QUANTITY_INDEX] -= 1
         print("\nDecreased quantity by 1. New quantity is: " + str(inventory[car_index][QUANTITY_INDEX]))
-    #If Matching Car Had Only One Unit in Inventory, Remove Car Entry from Inventory
+        
+    #If Car Matched with Only One Unit, Delete Car Entry 
     else:
         inventory.remove(inventory[car_index])
         print("\nCar removed from inventory.")
 
-#Find Car in Inventory
+
 def find_car(inventory):
     """(list) -> None
     This function takes one variable, inventory, which is a list of lists. It first 
@@ -257,13 +256,10 @@ def find_car(inventory):
     No cars found!
     """
     
-    #List of Cars With Matching Parameters Per New Search
     matching_cars = []
     
-    #Display Search Parameter Options
     print(SEARCH_MENU)
     
-    #Capture User Choice of Search Parameter
     user_search = int(input("Enter your selection: "))
     
     #Prompt for User Input Outside of Available Options and Call for New Input
@@ -299,7 +295,7 @@ def find_car(inventory):
     else:
         print("\nNo cars found!")
 
-#Show Full Car Inventory
+
 def show_inventory(inventory):
     """(list) -> None
     This function takes one variable, the inventory, which is a list of lists.
